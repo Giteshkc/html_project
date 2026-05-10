@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Marks Calculator</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        table{
+            margin: auto;
+        }
+
+        td{
+            padding: 8px;
+        }
+
+        input{
+            padding: 5px;
+            width: 120px;
+        }
+
+        button{
+            padding: 10px 20px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        #result{
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Student Result Calculator</h2>
+
+    <table id="subjectTable"></table>
+
+    <button onclick="calculateResult()">Submit</button>
+
+    <div id="result"></div>
+
+    <script>
+
+        // Array of subjects
+        let subjects = [
+            "English",
+            "Math",
+            "Science",
+            "Computer",
+            "Social",
+            "Nepali",
+            "Account",
+            "Physics"
+        ];
+
+        // Create input fields using loop
+        let table = document.getElementById("subjectTable");
+
+        for(let i = 0; i < subjects.length; i++){
+
+            table.innerHTML += `
+                <tr>
+                    <td>${subjects[i]} :</td>
+                    <td>
+                        <input type="number" id="m${i}">
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Calculate Result
+        function calculateResult(){
+
+            let total = 0;
+
+            // Loop through all subjects
+            for(let i = 0; i < subjects.length; i++){
+
+                total += Number(document.getElementById("m" + i).value);
+            }
+
+            let division = "";
+            let color = "black";
+
+            if(total > 700){
+                division = "Distinction";
+                color = "green";
+            }
+            else if(total > 600){
+                division = "First Division";
+            }
+            else if(total >= 500){
+                division = "Second Division";
+            }
+            else if(total >= 400){
+                division = "Third Division";
+            }
+            else{
+                division = "Fail";
+                color = "red";
+            }
+
+            // Display Result
+            document.getElementById("result").innerHTML =
+                "Total Marks : " + total + "<br>" +
+                "Result : " + division;
+
+            document.getElementById("result").style.color = color;
+        }
+
+    </script>
+
+</body>
+</html>
