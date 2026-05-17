@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bank System</title>
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body{
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .box{
+            width: 320px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        h2{
+            color: green;
+        }
+
+        input{
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button{
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .eye{
+            cursor: pointer;
+            margin-left: 10px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>Simple Bank</h1>
+
+    <!-- BALANCE -->
+    <h2>
+        Balance: Rs.
+        <span id="balance">10000</span>
+
+        <i class="fa-solid fa-eye eye"
+           id="balanceEye"
+           onclick="balanceShowHide()"></i>
+    </h2>
+
+    <!-- AMOUNT INPUT (NO EYE BELOW) -->
+    <input type="password" id="amount" placeholder="Enter amount">
+
+    <br><br>
+
+    <button onclick="bank('deposit')">Deposit</button>
+    <button onclick="bank('withdraw')">Withdraw</button>
+
+</div>
+
+<script>
+
+    let balance = 10000;
+    const correctPin = "1234";
+
+    // Balance show/hide
+    let balanceVisible = true;
+
+    function balanceShowHide(){
+
+        let balanceText = document.getElementById("balance");
+        let icon = document.getElementById("balanceEye");
+
+        if(balanceVisible){
+            balanceText.innerText = "****";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+            balanceVisible = false;
+        }
+        else{
+            balanceText.innerText = balance;
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+            balanceVisible = true;
+        }
+    }
+
+    // Bank function
+    function bank(type){
+
+        let amount = Number(document.getElementById("amount").value);
+
+        if(amount <= 0){
+            alert("Enter valid amount");
+            return;
+        }
+
+        if(amount % 100 !== 0){
+            alert("Amount must be multiple of 100");
+            return;
+        }
+
+        let pin = prompt("Enter your PIN");
+
+        if(pin !== correctPin){
+            alert("Wrong PIN");
+            return;
+        }
+
+        if(type === "deposit"){
+            balance += amount;
+            alert("Deposit Successful");
+        }
+        else if(type === "withdraw"){
+
+            if(amount > balance){
+                alert("Insufficient Balance");
+                return;
+            }
+
+            balance -= amount;
+            alert("Withdraw Successful");
+        }
+
+        document.getElementById("balance").innerText = balance;
+        document.getElementById("amount").value = "";
+    }
+
+</script>
+
+</body>
+</html>
